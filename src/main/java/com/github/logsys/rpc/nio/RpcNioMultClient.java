@@ -93,15 +93,15 @@ public class RpcNioMultClient {
 
                     if (key.isValid()) {
 
-                        SocketChannel socketChannel = (SocketChannel) key.channel();
-                        if (key.isConnectable()) { // 连接操作完成
-                            // 连接操作完成，即服务器返回了ACK应答信息。
-                            // 这时，我们需要对连接结果进行判断，调用socketChannel.finishConnect()，
-                            // 如果返回值true，说明连接成功；如果返回值false，说明正在进行连接；或者抛出IOException，说明连接失败
-                            if (socketChannel.finishConnect()) {
-                                socketChannel.register(selector, SelectionKey.OP_READ);
-                            }
-                        }
+//                        SocketChannel socketChannel = (SocketChannel) key.channel();
+//                        if (key.isConnectable()) { // 连接操作完成
+//                            // 连接操作完成，即服务器返回了ACK应答信息。
+//                            // 这时，我们需要对连接结果进行判断，调用socketChannel.finishConnect()，
+//                            // 如果返回值true，说明连接成功；如果返回值false，说明正在进行连接；或者抛出IOException，说明连接失败
+//                            if (socketChannel.finishConnect()) {
+//                                socketChannel.register(selector, SelectionKey.OP_READ);
+//                            }
+//                        }
 
                         if (key.isReadable()) {
                             // 读取信息

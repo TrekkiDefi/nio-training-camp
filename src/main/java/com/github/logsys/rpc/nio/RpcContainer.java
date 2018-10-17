@@ -13,7 +13,7 @@ public class RpcContainer {
     // 请求对象容器
     private static ConcurrentHashMap<Long, RpcResponseFuture> requestFuture = new ConcurrentHashMap<>();
     // 请求ID
-    private static AtomicLong requstId = new AtomicLong(0);
+    private static AtomicLong requsetId = new AtomicLong(0);
 
     /**
      * 获取下一请求ID
@@ -21,7 +21,7 @@ public class RpcContainer {
      * @return
      */
     public static Long getRequestId() {
-        return requstId.getAndIncrement();
+        return requsetId.getAndIncrement();
     }
 
     public static void addResponse(Long requestId, byte[] responseBytes) {

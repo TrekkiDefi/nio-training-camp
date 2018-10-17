@@ -24,19 +24,19 @@ public class RpcNioMultServerTask implements Runnable {
     public void run() {
         if (bytes != null && bytes.length > 0 && channel != null) {
             // 反序列化
-            RequstMultObject requstMultObject = (RequstMultObject) SerializeUtil.unSerialize(bytes);
+            RequestMultObject requestMultObject = (RequestMultObject) SerializeUtil.unSerialize(bytes);
             // 调用服务并序列化结果然后返回
-            requestHandle(requstMultObject, channel);
+            requestHandle(requestMultObject, channel);
         }
     }
 
-    public void requestHandle(RequstMultObject requstObject, SocketChannel channel) {
+    public void requestHandle(RequestMultObject requsetObject, SocketChannel channel) {
 
-        Long requestId = requstObject.getRequestId(); // 请求ID
-        Object obj = BeanContainer.getBean(requstObject.getCalzz()); // 根据请求类型，获取服务端的实现
-        String methodName = requstObject.getMethodName(); // 请求的方法名称
-        Class<?>[] parameterTypes = requstObject.getParamTypes(); // 请求的参数类型
-        Object[] arguments = requstObject.getArgs(); // 请求的参数
+        Long requestId = requsetObject.getRequestId(); // 请求ID
+        Object obj = BeanContainer.getBean(requsetObject.getCalzz()); // 根据请求类型，获取服务端的实现
+        String methodName = requsetObject.getMethodName(); // 请求的方法名称
+        Class<?>[] parameterTypes = requsetObject.getParamTypes(); // 请求的参数类型
+        Object[] arguments = requsetObject.getArgs(); // 请求的参数
         try {
             Method method = obj.getClass().getMethod(methodName, parameterTypes);
             Object result = method.invoke(obj, arguments);

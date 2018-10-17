@@ -8,11 +8,11 @@ import java.io.Serializable;
  * Created by liuchunlong on 2018/10/17.
  */
 @Data
-public class RequstMultObject implements Serializable {
+public class RequestMultObject implements Serializable {
 
     private static final long serialVersionUID = 3132836600205356306L;
 
-    public RequstMultObject(Class<?> calzz, String methodName, Class<?>[] paramTypes, Object[] args) {
+    public RequestMultObject(Class<?> calzz, String methodName, Class<?>[] paramTypes, Object[] args) {
         this.calzz = calzz;
         this.methodName = methodName;
         this.paramTypes = paramTypes;

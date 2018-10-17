@@ -14,23 +14,23 @@ public class RpcResponseFuture {
 
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
-    private Long requstId;
+    private Long requsetId;
 
     /**
      *
-     * @param requstId 请求ID
+     * @param requsetId 请求ID
      */
-    public RpcResponseFuture(Long requstId) {
-        this.requstId = requstId;
+    public RpcResponseFuture(Long requsetId) {
+        this.requsetId = requsetId;
     }
 
     public byte[] get() {
         // 获取响应结果
-        byte[] bytes = RpcContainer.getResponse(requstId);
+        byte[] bytes = RpcContainer.getResponse(requsetId);
         if (bytes == null || bytes.length < 0) {
             lock.lock();
             try {
-                log.info("请求id:" + requstId + ",请求结果尚未返回，线程挂起");
+                log.info("请求id:" + requsetId + ",请求结果尚未返回，线程挂起");
                 condition.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -38,8 +38,8 @@ public class RpcResponseFuture {
                 lock.unlock();
             }
         }
-        log.info("请求id:" + requstId + ",请求结果返回，线程挂起结束");
-        return RpcContainer.getResponse(requstId);
+        log.info("请求id:" + requsetId + ",请求结果返回，线程挂起结束");
+        return RpcContainer.getResponse(requsetId);
     }
 
     public void rpcIsDone() {
@@ -52,10 +52,10 @@ public class RpcResponseFuture {
     }
 
     public Long getRequstId() {
-        return requstId;
+        return requsetId;
     }
 
-    public void setRequstId(Long requstId) {
-        this.requstId = requstId;
+    public void setRequstId(Long requsetId) {
+        this.requsetId = requsetId;
     }
 }
