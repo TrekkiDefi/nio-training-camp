@@ -9,6 +9,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liuchunlong on 2018/10/17.
@@ -65,6 +66,11 @@ public class RpcNioMultClient {
             if (channel.isConnectionPending()) {
                 while (!channel.finishConnect()) {
                     //wait, or do something else...
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -84,6 +90,10 @@ public class RpcNioMultClient {
     public void listen() {
         try {
             while (true) {
+
+                // 注册到多路复用器，监听可读事件，因为客户端只需要从服务端获得数据然后读取，所以只需要监听READ事件
+                SelectionKey selectionKey = channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_CONNECT);
+
                 selector.select();
                 Iterator ite = selector.selectedKeys().iterator();
                 while (ite.hasNext()) {
