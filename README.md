@@ -1,4 +1,4 @@
-# NIOTraining
+# nio-training
 
 NIO 学习代码库
 
